@@ -6,17 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.kasturi.admin.genericadapter.JavaViewHolderFactory
 
-abstract class GenericAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    var listItems: List<T>
-
-    constructor(listItems: List<T>) {
-        this.listItems = listItems
-    }
-
-    constructor() {
-        listItems = emptyList()
-    }
+abstract class GenericAdapter<T>(var listItems: List<T> = emptyList()) : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     fun setItems(listItems: List<T>) {
         this.listItems = listItems
@@ -29,13 +19,10 @@ abstract class GenericAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
         (holder as Binder<T>).bind(listItems[position])
     }
 
-    override fun getItemCount(): Int {
-        return listItems.size
-    }
+    override fun getItemCount() = listItems.size
 
     override fun getItemViewType(position: Int): Int {
         return getLayoutId(position, listItems[position])
